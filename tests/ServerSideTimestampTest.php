@@ -90,17 +90,12 @@ class ServerSideTimestampTest extends PHPUnit_Framework_TestCase
         };
         $timestamp    = $grammar::timestamp();
         $generatedSql = $capsule->connection()->getQueryLog()[ 0 ][ 'query' ];
-        $expectedSql  = sprintf(
-            'insert into %s (%s, %s, %s) values (?, %s, %s)',
-            $quote('test_table'),
-            $quote('name'),
-            $quote('updated_at'),
-            $quote('created_at'),
-            $timestamp,
-            $timestamp
-        );
+        $pattern = '#insert into .test_table. \(.name., .updated_at., .created_at.\) values \(\?, (.*), (.*)\)#';
+        $match = [];
+        $result = preg_match($pattern, $generatedSql, $match);
 
-        $this->assertEquals($expectedSql, $generatedSql);
+        $this->assertEquals($match[1], $timestamp);
+        $this->assertEquals($match[2], $timestamp);
     }
 
 }
