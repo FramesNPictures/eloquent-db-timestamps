@@ -4,7 +4,7 @@ namespace Fnp\Eloquent\Grammar;
 
 use Fnp\Eloquent\Grammar;
 
-class Postgres implements Grammar
+class Pgsql implements Grammar
 {
     /**
      * Returns server side timestamp SQL command
