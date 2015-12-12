@@ -16,6 +16,7 @@ class ServerSideTimestampTest extends PHPUnit_Framework_TestCase
             'database' => ':memory:',
             'prefix'   => '',
             'grammar'  => \Fnp\Eloquent\Grammar\Sqlite::class,
+            'quote'    => '"',
         ],
 
         self::CONNECTION_MYSQL => [
@@ -29,6 +30,7 @@ class ServerSideTimestampTest extends PHPUnit_Framework_TestCase
             'prefix'    => '',
             'strict'    => FALSE,
             'grammar'   => \Fnp\Eloquent\Grammar\Mysql::class,
+            'quote'     => '"',
         ],
 
         self::CONNECTION_POSTGRES => [
@@ -41,6 +43,8 @@ class ServerSideTimestampTest extends PHPUnit_Framework_TestCase
             'prefix'   => '',
             'schema'   => 'public',
             'grammar'  => \Fnp\Eloquent\Grammar\Pgsql::class,
+            'quote'    => '`',
+
         ],
 
     ];
@@ -80,10 +84,18 @@ class ServerSideTimestampTest extends PHPUnit_Framework_TestCase
 
         /** @var \Fnp\Eloquent\Grammar $grammar */
         $grammar      = $this->config[ $connection ][ 'grammar' ];
+        $quote        = function ($name) use ($connection) {
+            $quote = $this->config[ $connection ][ 'quote' ];
+            return $quote . $name . $quote;
+        };
         $timestamp    = $grammar::timestamp();
         $generatedSql = $capsule->connection()->getQueryLog()[ 0 ][ 'query' ];
         $expectedSql  = sprintf(
-            'insert into "test_table" ("name", "updated_at", "created_at") values (?, %s, %s)',
+            'insert into %s (%s, %s, %s) values (?, %s, %s)',
+            $quote('test_table'),
+            $quote('name'),
+            $quote('updated_at'),
+            $quote('created_at'),
             $timestamp,
             $timestamp
         );
