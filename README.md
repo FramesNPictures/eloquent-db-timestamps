@@ -5,3 +5,4 @@
 [![Latest Unstable Version](https://poser.pugx.org/framesnpictures/eloquent-db-timestamps/v/unstable)](https://packagist.org/packages/framesnpictures/eloquent-db-timestamps)
 [![License](https://poser.pugx.org/framesnpictures/eloquent-db-timestamps/license)](https://packagist.org/packages/framesnpictures/eloquent-db-timestamps)
 [![Build Status](https://travis-ci.org/FramesNPictures/eloquent-db-timestamps.svg?branch=master)](https://travis-ci.org/FramesNPictures/eloquent-db-timestamps)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FramesNPictures/eloquent-db-timestamps/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FramesNPictures/eloquent-db-timestamps/?branch=master)
