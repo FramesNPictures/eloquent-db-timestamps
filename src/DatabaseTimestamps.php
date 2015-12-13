@@ -32,12 +32,20 @@ trait DatabaseTimestamps
 
     public function setUpdatedAtAttribute($value)
     {
+        if (!$this->updatedField) {
+            return;
+        }
+
         $timestampCommand                        = $this->getTimestampCommand();
         $this->attributes[ $this->updatedField ] = new Expression($timestampCommand);
     }
 
     public function setCreatedAtAttribute($value)
     {
+        if (!$this->createdField) {
+            return;
+        }
+
         $timestampCommand                        = $this->getTimestampCommand();
         $this->attributes[ $this->createdField ] = new Expression($timestampCommand);
     }
